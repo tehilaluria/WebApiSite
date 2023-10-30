@@ -1,0 +1,24 @@
+﻿body {
+    background-size: 60%;
+    background-position-x: center;
+    text-align: center;
+    font-family: cursive;
+    /*background-image:url( '0568.jpg')*/
+    background-repeat: no-repeat;
+}
+
+.but {
+    font-size: x-large;
+    font-family: cursive;
+    color: black;
+    background-color: aquamarine;
+    border-color: black;
+    border-width: initial;
+    width: 200px;
+    height: 60px;
+}
+
+.inputs {
+    width: 200px;
+    height: 30px;
+}

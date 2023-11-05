@@ -14,6 +14,7 @@ namespace Services
         {
 
             User user = await _userRepository.getUserByEmialAndPassword(Email, password);
+            //return user . If it's not null, the function will return user, and if it is null, the function will return null...
             if (user != null)
             {
                 return user;
@@ -35,6 +36,7 @@ namespace Services
         }
         public async Task<int> updateUser(int id, User user)
         {
+            //Task<user> ...
             int result = check(user.Password);
             if (result < 2)
                 return 0;

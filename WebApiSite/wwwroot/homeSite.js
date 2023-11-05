@@ -1,7 +1,8 @@
 ﻿
 login = async () =>
 {
-
+    //JavaScript function names and variables names should start with camel case
+    //userName,password
     try {
         const UserName = document.getElementById("username").value
         const Password = document.getElementById("password").value
@@ -11,7 +12,7 @@ login = async () =>
                 headers: { 'Content-Type': 'application/json' },
             })
 
-        if (!res.ok)
+        if (!res.ok)//if res.status==400 for BadRequest() or 401 for unauthorized()! 
             window.alert("NotFound")
         else {
             const user = await res.json()
@@ -30,7 +31,8 @@ register = async () =>
     
     const user = {
        UserName: document.getElementById("userNameRegister").value,
-       Password: document.getElementById("passwordRegister").value,
+        Password: document.getElementById("passwordRegister").value,
+       // FirstName, LastName
        firstName: document.getElementById("FirstName").value, 
        lastName: document.getElementById("LastName").value
     }
@@ -46,17 +48,19 @@ register = async () =>
             alert("Sorry, we couldn't add you to our site, Try again")
         else {
             const data = await res.json()
+            //successfully (spelling)
             alert(`user ${data.userName} registered succfully`)
         }
     }
 
     catch (err) {
+        //Alerting errors to the user is not recommended, only log them to the console.
         alert("something not good... :(")
         console.log(err)
     }
 }
 
-
+//const instead of let! (if you don't change the variable)
 checkPassword = async () => {
     var res;
     var strength = {
@@ -89,4 +93,6 @@ checkPassword = async () => {
 
     }
 }
+
+//Check the password's strength in the register function ! (not only when the button clicked)
 

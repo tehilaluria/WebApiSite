@@ -16,7 +16,7 @@ login = async () =>
         else {
             const user = await res.json()
             sessionStorage.setItem("user", JSON.stringify(user))
-            window.location.href = "update.html"
+            window.location.href = "Products.html"
              }
         }
 

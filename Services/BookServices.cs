@@ -18,9 +18,9 @@ namespace Services
         }
 
 
-        public async Task<IEnumerable<Book>> getBooksAsync()
+        public async Task<IEnumerable<Book>> getBooksAsync(string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
-            return await _bookRepository.getBooksAsync();
+            return await _bookRepository.getBooksAsync(desc, minPrice, maxPrice, categoryIds);
         }
     }
 }

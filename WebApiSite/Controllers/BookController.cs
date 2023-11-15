@@ -17,9 +17,9 @@ namespace WebApiSite.Controllers
         }
         // GET: api/<BookController>
         [HttpGet]
-        public async Task<IEnumerable<Book>> Get()
+        public async Task<IEnumerable<Book>> Get(string? desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            return await _bookServices.getBooksAsync();
+            return await _bookServices.getBooksAsync( desc,  minPrice,  maxPrice, categoryIds);
         }
 
         // GET api/<BookController>/5

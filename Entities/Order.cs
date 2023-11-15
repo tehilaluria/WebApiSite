@@ -15,5 +15,5 @@ public partial class Order
 
     public virtual ICollection<OrderBook> OrderBooks { get; set; } = new List<OrderBook>();
 
-    public virtual User User { get; set; } = null!;
+    public virtual User? User { get; set; } = null!;
 }

@@ -29,8 +29,10 @@ Create the database using EF code First:
    - Open the package manager terminal in Visual Studio: Go to "Tools" "NuGet Package Manager" "Package Manager Terminal".
    - In the package manager console, select the project (WebApiSite) from the "Default Project" dropdown.
    - Run the following command to create the database:
+   - 
       1.add-migration [MyDataBaseName]
- 		2.Update-DataBase. 	
+ 		2.Update-DataBase.
+     
  And your DB is ready for use!
      
 Thanks for checking out my project hope you enjoyed!

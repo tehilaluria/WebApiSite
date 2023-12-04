@@ -1,4 +1,5 @@
-﻿const update = async () =>
+﻿
+const update = async () =>
 {
    const userJson = sessionStorage.getItem("user")
    if (!userJson)
@@ -9,9 +10,9 @@
     {
         UserName: document.getElementById("userNameUpdate").value,
         Password: document.getElementById("passwordUpdate").value,
-        firstName: document.getElementById("FirstNameUpdate").value,
-        lastName: document.getElementById("LastNameUpdate").value,
-        userId: UserId
+        FirstName: document.getElementById("firstNameUpdate").value,
+        LastName: document.getElementById("lastNameUpdate").value,
+        UserId: UserId
     }
 
     try

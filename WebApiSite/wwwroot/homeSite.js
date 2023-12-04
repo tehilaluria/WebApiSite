@@ -5,7 +5,7 @@ const login = async () =>
     {
         const user =
         {
-            userName: document.getElementById("username").value,
+            userName: document.getElementById("userName").value,
             password: document.getElementById("password").value
         }
         const res = await fetch(`api/User/login`, {
@@ -16,7 +16,7 @@ const login = async () =>
         })
 
         if (!res.ok )
-            window.alert("ארעה שגיאה ")
+            window.alert("Error ")
         else
         {
             const user = await res.json()
@@ -37,8 +37,8 @@ const register = async () =>
     const user = {
        UserName: document.getElementById("userNameRegister").value,
        Password: document.getElementById("passwordRegister").value,
-       firstName: document.getElementById("FirstName").value, 
-       lastName: document.getElementById("LastName").value
+       FirstName: document.getElementById("firstName").value, 
+       LastName: document.getElementById("lastName").value
     }
     try {
         const res = await fetch('api/User',
@@ -53,12 +53,12 @@ const register = async () =>
         else
         {
             const data = await res.json()
-            alert(`user ${data.userId} registered succfully`)
+            alert(`user ${data.userId} registered successfully`)
         }
     }
 
     catch (err) {
-        alert("ארעה שגיאה")
+        alert("Error")
         console.log(err)
     }
 }

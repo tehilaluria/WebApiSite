@@ -3,8 +3,11 @@ Thanks for looking into my project. This project was built using Asp.Net Core 7 
 
 I divided my project into different layers that communicate via DI in order to gain encapsulation and flexibility:
 
+
 1.application layer (which includes controllers, wwwroot for static files, and middlewares)
+
 2.Service layer for business logic,
+
 3.Repository for connecting to the database Entity Framework Core 7 as then ORM with a DB-first approach.
 
 I used the zxcvbn-core library to ensure password strength.

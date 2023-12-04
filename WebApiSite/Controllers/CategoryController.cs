@@ -25,7 +25,7 @@ namespace WebApiSite.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            IEnumerable<Category> categories = await _categoryServices.getCategoriesAsync();
+            IEnumerable<Category> categories = await _categoryServices.getCategoriesAsync();//
             IEnumerable<CategoryDTO> categoryDTOs = _mapper.Map<IEnumerable<Category>, IEnumerable<CategoryDTO>>(categories);
             return Ok(categoryDTOs);
         }

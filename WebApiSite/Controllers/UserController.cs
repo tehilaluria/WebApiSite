@@ -17,7 +17,7 @@ namespace WebApiSite.Controllers
  
         {
             _logger = logger;
-            _userServices = iuserServices;
+            _userServices = iuserServices;///
             _mapper = mapper;
         }
         // GET api/<UserController>/5

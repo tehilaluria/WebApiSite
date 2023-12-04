@@ -10,6 +10,7 @@ I divided my project into different layers that communicate via DI in order to g
 
 3.Repository for connecting to the database Entity Framework Core 7 as then ORM with a DB-first approach.
 
+
 I used the zxcvbn-core library to ensure password strength.
 
 I have a swagger that describes my project structure.

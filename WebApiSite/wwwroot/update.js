@@ -1,7 +1,10 @@
-﻿update = async () =>
+﻿const update = async () =>
 {
-    const userJson = sessionStorage.getItem("user")
+   const userJson = sessionStorage.getItem("user")
+   if (!userJson)
+        return
     const UserId = JSON.parse(userJson).userId
+    
     const user =
     {
         UserName: document.getElementById("userNameUpdate").value,
@@ -11,7 +14,8 @@
         userId: UserId
     }
 
-    try {
+    try
+    {
        
         const res = await fetch(`api/User/${UserId}`,
             {
@@ -21,7 +25,8 @@
             })
         if (!res.ok)
             alert("error updated to the server,please try again!")
-        else {
+        else
+        {
 
             alert(`user ${UserId} updated succfully`)
         }
@@ -32,10 +37,11 @@
     }
 }
 
-    hellow = () => {
-        const userToHello = sessionStorage.getItem("user");
-        const userToHelloJSON = JSON.parse(userToHello)
-        const hello = document.getElementById("hello")
-        hello.innerHTML = `Hello ${userToHelloJSON.firstName}! Welcome to our site!`
-    }
+const hello = () =>
+{
+    const userToHello = sessionStorage.getItem("user");
+    const userToHelloJSON = JSON.parse(userToHello)
+    const hello = document.getElementById("hello")
+    hello.innerHTML = `Hello ${userToHelloJSON.firstName}! Welcome to our site!`
+}
 

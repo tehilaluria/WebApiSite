@@ -6,6 +6,9 @@ namespace Repositories
     {
         Task<User> addUser(User user);
         Task<User> getUserByEmialAndPassword(string email, string password);
-        Task<int> updateUser(int id, User userUpdate);
+        Task<User> updateUser(int id, User userUpdate);
+
+
+
     }
 }

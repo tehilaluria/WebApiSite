@@ -1,31 +1,37 @@
 ﻿
-login = async () =>
+const login = async () =>
 {
+    try
+    {
+        const user =
+        {
+            userName: document.getElementById("username").value,
+            password: document.getElementById("password").value
+        }
+        const res = await fetch(`api/User/login`, {
+            method: "POST",
+            headers: {
+            "Content-Type": "application/json"
+        }, body: JSON.stringify(user)
+        })
 
-    try {
-        const UserName = document.getElementById("username").value
-        const Password = document.getElementById("password").value
-        const res = await fetch(`api/User?UserName=${UserName}&Password=${Password}`,
-            {
-                method: 'GET',
-                headers: { 'Content-Type': 'application/json' },
-            })
-
-        if (!res.ok)
-            window.alert("NotFound")
-        else {
+        if (!res.ok )
+            window.alert("ארעה שגיאה ")
+        else
+        {
             const user = await res.json()
             sessionStorage.setItem("user", JSON.stringify(user))
             window.location.href = "Products.html"
-             }
-        }
+
+         }
+     }
 
      catch (e) {
         console.log(e);
     }
 }
 
-register = async () =>
+const register = async () =>
 {
     
     const user = {
@@ -44,22 +50,24 @@ register = async () =>
             })
         if (!res.ok)
             alert("Sorry, we couldn't add you to our site, Try again")
-        else {
+        else
+        {
             const data = await res.json()
-            alert(`user ${data.userName} registered succfully`)
+            alert(`user ${data.userId} registered succfully`)
         }
     }
 
     catch (err) {
-        alert("something not good... :(")
+        alert("ארעה שגיאה")
         console.log(err)
     }
 }
 
-
-checkPassword = async () => {
+const checkPassword = async () =>
+{
     var res;
-    var strength = {
+    var strength =
+    {
         0: "Worst",
         1: "Bad",
         2: "Weak",
@@ -80,13 +88,19 @@ checkPassword = async () => {
         })
         .then(r => r.json())
         .then(data => res = data)
-        meter.value = res;
-    if (password !== "") {
+         meter.value = res; 
+    if (password !== "")
+    {
         text.innerHTML = "Strength: "+strength[res];
     }
-    else {
+    else
+    {
         text.innerHTML = "No Password";
-
     }
 }
 
+const update = () =>
+{
+
+    window.location.href = "update.html"
+}

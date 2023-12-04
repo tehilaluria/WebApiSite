@@ -60,9 +60,8 @@
                 </a>
             </span>
             <div class="Checkout ">
-                <a class="goToCart" href="ShoppingBag.html">לקופה</a>
+                <a  class="goToCart" href="ShoppingBag.html">לקופה</a>
             </div>
-
 
         </div>
     </header>
@@ -84,7 +83,7 @@
 
         <div id="nameFilter" class="nameFilter filterBreak">
 
-            <input type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
+            <input onchange="showFilter()" type="text" id="nameSearch" class="floatRight" placeholder="חיפוש לפי שם מוצר">
 
             <button class="floatRight" tabindex="0" onclick="showFilter()">
                 <div class="header42"><img src="images/searchIcon.jpg.svg" alt="סמל חיפוש"></div>
@@ -96,7 +95,7 @@
             <input type="text" maxlength="9" id="minPrice" class="priceInputText" placeholder="מ-">
             <span class="priceCurrency">₪</span>
 
-            <input type="text" maxlength="9" id="maxPrice" class="priceInputText" placeholder="עד-l">
+            <input type="text" maxlength="9" id="maxPrice" class="priceInputText" placeholder="עד-">
             <span class="priceCurrency">₪</span>
             <button onclick="showFilter()">
                 <span><img src="images/searchIcon.jpg.svg" alt="סמל חיפוש"></span>

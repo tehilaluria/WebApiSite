@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace DTO
 {
-    public class OrderBookServices
+    public class UserLoginDTO
     {
+        public int UserId { get; set; }
+        public string FirstName { get; set; }
+
+
+
     }
 }

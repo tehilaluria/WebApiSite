@@ -1,4 +1,6 @@
-﻿using Entities;
+﻿using AutoMapper;
+using DTO;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
 
@@ -11,40 +13,21 @@ namespace WebApiSite.Controllers
     public class BookController : ControllerBase
     {
         IBookServices _bookServices;
-        public BookController(IBookServices ibookServices)
+        private readonly IMapper _mapper;
+       
+        public BookController(IBookServices ibookServices, IMapper mapper)
         {
             _bookServices = ibookServices;
+            _mapper = mapper;
         }
         // GET: api/<BookController>
         [HttpGet]
-        public async Task<IEnumerable<Book>> Get(string? desc, int? minPrice, int? maxPrice, [FromQuery] int?[] categoryIds)
+        public async Task<IEnumerable<BookDTO>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            return await _bookServices.getBooksAsync( desc,  minPrice,  maxPrice, categoryIds);
+            IEnumerable<Book> books =await _bookServices.getBooksAsync( desc,  minPrice,  maxPrice, categoryIds);
+            IEnumerable<BookDTO> bookDTOs = _mapper.Map < IEnumerable<Book>, IEnumerable<BookDTO>>(books);
+            return bookDTOs;
         }
 
-        // GET api/<BookController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<BookController>
-        [HttpPost]
-        public void Post([FromBody] string value)
-        {
-        }
-
-        // PUT api/<BookController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<BookController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

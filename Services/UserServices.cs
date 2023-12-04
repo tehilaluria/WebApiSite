@@ -26,18 +26,16 @@ namespace Services
         {
             int result = check(user.Password);
             if (result < 2)
+                  return null;
 
-                return null;
-
-            return await _userRepository.addUser(user);
-
-
+            return  await _userRepository.addUser(user);
         }
-        public async Task<int> updateUser(int id, User user)
+
+        public async Task<User> updateUser(int id, User user)
         {
             int result = check(user.Password);
             if (result < 2)
-                return 0;
+                return null;
 
             return await _userRepository.updateUser(id, user);
 
@@ -46,12 +44,8 @@ namespace Services
 
         public int check(string pwd)
         {
-
-
             var result = Zxcvbn.Core.EvaluatePassword(pwd);
             return result.Score;
-
-
         }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Entities;
+﻿using AutoMapper;
+using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using DTO;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,9 +13,11 @@ namespace WebApiSite.Controllers
     public class OrderController : ControllerBase
     {
         IOrderServices _orderServices;
-        public OrderController(IOrderServices iorderServices)
+        IMapper _mapper;
+        public OrderController(IOrderServices iorderServices, IMapper mapper)
         {
             _orderServices = iorderServices;
+            _mapper = mapper;
         }
         // GET: api/<OrderController>
         [HttpGet]
@@ -22,34 +26,21 @@ namespace WebApiSite.Controllers
             return new string[] { "value1", "value2" };
         }
 
-        // GET api/<OrderController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
         // POST api/<OrderController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] Order order)
+        public async Task<IActionResult> Post([FromBody] OrderDTO orderDTO)
         {
+            Order order = _mapper.Map<OrderDTO, Order>(orderDTO);
             Order newOrder = await _orderServices.AddOrderAsync(order);
             if (newOrder != null)
+            {
+                OrderDTO orderFormat = _mapper.Map<Order, OrderDTO>(newOrder);
 
-                return CreatedAtAction(nameof(Get), new { id = newOrder.OrderId }, newOrder);
+                return CreatedAtAction(nameof(Get), new { id = orderFormat.OrderId }, orderFormat);
+            }
             return NoContent();
         }
+        
        
-        // PUT api/<OrderController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<OrderController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

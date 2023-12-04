@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text.Json.Serialization;
 
 namespace Entities;
 
@@ -15,8 +14,10 @@ public partial class User
     public string? FirstName { get; set; }
 
     public string? LastName { get; set; }
-    
+
     public int UserId { get; set; }
 
     public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
 }
+
+

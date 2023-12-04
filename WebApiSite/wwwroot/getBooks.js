@@ -1,11 +1,8 @@
 
-
-
-getBooks = async (desc, minPrice, maxPrice, categoryIds) =>
+const getBooks = async (desc, minPrice, maxPrice, categoryIds) =>
 {
 
-    try
-    {
+    try {
         let url = `api/Book`;
         if (desc || minPrice || maxPrice || categoryIds)
             url += `?`
@@ -13,37 +10,39 @@ getBooks = async (desc, minPrice, maxPrice, categoryIds) =>
         if (minPrice) url += `&minPrice=${minPrice}`;
         if (maxPrice) url += `&maxPrice=${maxPrice}`;
         if (categoryIds) {
-            for (let i = 0; i < categoryIds.length; i++)
-            {
+            for (let i = 0; i < categoryIds.length; i++) {
                 url += `&categoryIds=${categoryIds[i]}`
             }
         }
         const res = await fetch(url)
-           
+
         if (!res.ok)
             window.alert("NotFound")
-        else
-        {
-      
-         let booksArray = await res.json()
+        else {
 
+            let booksArray = await res.json()
+
+            document.getElementById("counter").innerText = booksArray.length;
             console.log(booksArray.length)
-            for (let i = 0; i < booksArray.length; i++)
-            {
+            for (let i = 0; i < booksArray.length; i++) {
                 drawCard(booksArray[i])
 
             }
-         
+
         }
+
     }
 
-     catch (e)
+    catch (e)
     {
-    console.log(e);
+        console.log(e);
+    }
+    if (localStorage.length > 1) {
+        document.getElementById("ItemsCountText").innerText = (JSON.parse(localStorage.getItem("ArrayCard"))).length;
     }
 }
-drawCard = (book) =>
-{
+
+const drawCard = (book) => {
     console.log(book);
     var tmpBook = document.getElementById("temp-card");
     var cln = tmpBook.content.cloneNode(true);
@@ -51,11 +50,11 @@ drawCard = (book) =>
     cln.querySelector("h1").innerText = book.bookName;
     cln.querySelector("p.price").innerText = book.price + '$';
     cln.querySelector("p.auther").innerText = book.auther;
-    cln.querySelector("button").addEventListener('click', () =>{insertToCart(book)})     
+    cln.querySelector("button").addEventListener('click', () => { insertToCart(book) })
     document.getElementById("BookList").appendChild(cln);
 }
-const getAllCartegories = async () =>
-{
+
+const getAllCartegories = async () => {
     try {
         const res = await fetch("api/Category")
         const Categories = await res.json();
@@ -66,11 +65,9 @@ const getAllCartegories = async () =>
     }
 }
 
-const showCategories = async () =>
-{
+const showCategories = async () => {
     const Categories = await getAllCartegories();
-    for (let i = 0; i < Categories.length; i++)
-    {
+    for (let i = 0; i < Categories.length; i++) {
         var tmpCatg = document.getElementById("temp-category");
         var cln = tmpCatg.content.cloneNode(true);
         cln.querySelector("label").for = Categories[i].categoryName;
@@ -81,8 +78,7 @@ const showCategories = async () =>
     }
 }
 
-const showFilter = async () =>
-{
+const showFilter = async () => {
     let checkedCategories = [];
     const allCategoriesOptions = document.querySelectorAll(".opt");
     for (let i = 0; i < allCategoriesOptions.length; i++) {
@@ -95,25 +91,13 @@ const showFilter = async () =>
     getBooks(desc, minPrice, maxPrice, checkedCategories);
 
 }
-    let ArrayCard = [];
-    let counter = 0;
-const insertToCart=(book)=>
-    {
-        counter++;
-    document.getElementById("ItemsCountText").innerText = counter;
-        ArrayCard.push(book)
-        sessionStorage.setItem("ArrayCard", JSON.stringify(ArrayCard))
 
-    }
-
-let ArrayCard = [];
-let counter = 0;
-const addToCard = (product) => {
-    counter++;
-    console.log("counter", counter);
-    document.getElementById("ItemsCountText").innerText = counter;
-    ArrayCard.push(product);
-    console.log("productCard", product);
-    sessionStorage.setItem("ProductsCard", JSON.stringify(ArrayCard));
-    console.log("arrayCard", ArrayCard);
+const insertToCart = (book) => {
+    document.getElementById("ItemsCountText").innerText++;
+    if (localStorage.length == 1) localStorage.setItem("ArrayCard", "[]");
+    let card = JSON.parse(localStorage.getItem("ArrayCard"));
+    arrayCard = [...card, book];
+    let ArrayCard = JSON.stringify(arrayCard);
+    localStorage.ArrayCard = ArrayCard;
+    window.alert("ספר" + book.bookName.trim() + "  נוסף בהצלחה!")
 }

@@ -11,16 +11,16 @@ namespace Repositories
 {
     public  class CategoryRepository : ICategoryRepository
     {
-        private readonly Library214773780Context _Library214773780Context;
-        public CategoryRepository(Library214773780Context Library214773780Context)
+        private readonly BookStore325569796Context _BookStore325569796Context;
+        public CategoryRepository(BookStore325569796Context BookStore325569796Context)
         {
-            _Library214773780Context = Library214773780Context;
+            _BookStore325569796Context = BookStore325569796Context;
 
         }
 
         public async Task<IEnumerable<Category>> getCategoriesAsync()
         {
-            return await _Library214773780Context.Categories.ToListAsync();
+            return await _BookStore325569796Context.Categories.ToListAsync();
         }
     }
 }

@@ -1,6 +1,9 @@
 ﻿using Entities;
 using Microsoft.AspNetCore.Mvc;
 using Services;
+using DTO;
+using AutoMapper;
+
 namespace WebApiSite.Controllers
 {
     [Route("api/[controller]")]
@@ -8,23 +11,15 @@ namespace WebApiSite.Controllers
     public class UserController : ControllerBase
     {
         IUserServices _userServices;
-
-        public UserController(IUserServices iuserServices)
+        private readonly IMapper _mapper;
+        private readonly ILogger<UserController> _logger;
+        public UserController(IUserServices iuserServices, IMapper mapper, ILogger <UserController>logger)
+ 
         {
+            _logger = logger;
             _userServices = iuserServices;
+            _mapper = mapper;
         }
-        // GET: api/<UserController>
-        [HttpGet]
-        public async Task<ActionResult<User>> Get([FromQuery] string userName, [FromQuery] string password)
-        {
-            User foundUser = await _userServices.getUserByEmailAndPassword(userName, password);
-
-            if(foundUser!=null)
-                return Ok(foundUser);
-            return NoContent(); 
-
-        }
-
         // GET api/<UserController>/5
         [HttpGet("{id}")]
         public string Get(int id)
@@ -32,16 +27,19 @@ namespace WebApiSite.Controllers
             return "value";
         }
 
-        // POST api/<UserController>
-        [HttpPost]
+        // POST api/<UsersController>/login
+        [HttpPost("login")]
+        async public Task<ActionResult<UserLoginDTO>> login([FromBody] UserDTO userDTO)
+        {
+                User user = await _userServices.getUserByEmailAndPassword(userDTO.UserName, userDTO.Password);
+                if (user != null)
+                {
+                  _logger.LogInformation($"login attempted with UserName ,{userDTO.UserName} and password {userDTO.Password}");
+                    UserLoginDTO createdUserLoginDTO = _mapper.Map<User, UserLoginDTO>(user);
+                    return Ok(createdUserLoginDTO);
+                }
 
-        public async Task<IActionResult> Post([FromBody] User user)
-         {
-            User  newUser = await _userServices.addUser(user);
-            if(newUser!=null)
-
-                return CreatedAtAction(nameof(Get), new { id = user.UserId }, newUser);
-          return NoContent();   
+                return NotFound();
         }
 
         [HttpPost("check")]
@@ -55,25 +53,26 @@ namespace WebApiSite.Controllers
             return -1;
         }
 
+        // POST api/<UserController>
+        [HttpPost]
 
+        public async Task<IActionResult> Post([FromBody] User user)
+         {
+            User  newUser = await _userServices.addUser(user);
+            UserLoginDTO createdUserLoginDTO = _mapper.Map<User, UserLoginDTO>(newUser);
+            return newUser != null?CreatedAtAction(nameof(Get), new { id = createdUserLoginDTO.UserId }, createdUserLoginDTO) : BadRequest("The password provided is too weak. Please choose a stronger password.");
 
+        }
+       
         // PUT api/<UserController>/5
         [HttpPut("{UserId}")]
-        public async Task<IActionResult> Put(int UserId, [FromBody] User userUpdate)
+        public async Task<ActionResult<User>> Put(int UserId, [FromBody] User userUpdate)
         {
-          int ifSuccess=  await _userServices.updateUser(UserId, userUpdate);
-            if(ifSuccess!=0)
-               return Ok();   
-            return BadRequest();
-
+          return await _userServices.updateUser(UserId, userUpdate)!=null? Ok(userUpdate) : BadRequest();
         }
 
-        // DELETE api/<UserController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
-
+       
+      
 
     }
 

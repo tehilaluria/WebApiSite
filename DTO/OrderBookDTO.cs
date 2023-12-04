@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Services
+namespace DTO
 {
-    public class OrderBookServices
+    public class OrderBookDTO
     {
+        public int BookId { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

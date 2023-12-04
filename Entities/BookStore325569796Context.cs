@@ -1,18 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Entities;
 
-public partial class Library214773780Context : DbContext
+public partial class BookStore325569796Context : DbContext
 {
-    public Library214773780Context()
+    public IConfiguration _configuration { get; }
+    public BookStore325569796Context()
     {
-    }
 
-    public Library214773780Context(DbContextOptions<Library214773780Context> options)
-        : base(options)
+    }
+    public BookStore325569796Context(DbContextOptions<BookStore325569796Context> options, IConfiguration configuration)
+    : base(options)
     {
+
+        _configuration = configuration;
     }
 
     public virtual DbSet<Book> Books { get; set; }
@@ -23,11 +27,13 @@ public partial class Library214773780Context : DbContext
 
     public virtual DbSet<OrderBook> OrderBooks { get; set; }
 
+    public virtual DbSet<Rating> Ratings { get; set; }
+
     public virtual DbSet<User> Users { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=srv2\\pupils;Database=Library214773780;Trusted_Connection=True;TrustServerCertificate=True");
+        => optionsBuilder.UseSqlServer(_configuration.GetConnectionString("MyBookStore"));
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -72,8 +78,6 @@ public partial class Library214773780Context : DbContext
         {
             entity.ToTable("OrderBook");
 
-            entity.Property(e => e.OrderBookId).ValueGeneratedNever();
-
             entity.HasOne(d => d.Book).WithMany(p => p.OrderBooks)
                 .HasForeignKey(d => d.BookId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -83,6 +87,30 @@ public partial class Library214773780Context : DbContext
                 .HasForeignKey(d => d.OrderId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OrderBook_Orders");
+        });
+
+        modelBuilder.Entity<Rating>(entity =>
+        {
+            entity.ToTable("RATING");
+
+            entity.Property(e => e.RatingId).HasColumnName("RATING_ID");
+            entity.Property(e => e.Host)
+                .HasMaxLength(50)
+                .HasColumnName("HOST");
+            entity.Property(e => e.Method)
+                .HasMaxLength(10)
+                .IsFixedLength()
+                .HasColumnName("METHOD");
+            entity.Property(e => e.Path)
+                .HasMaxLength(50)
+                .HasColumnName("PATH");
+            entity.Property(e => e.RecordDate)
+                .HasColumnType("datetime")
+                .HasColumnName("Record_Date");
+            entity.Property(e => e.Referer)
+                .HasMaxLength(100)
+                .HasColumnName("REFERER");
+            entity.Property(e => e.UserAgent).HasColumnName("USER_AGENT");
         });
 
         modelBuilder.Entity<User>(entity =>

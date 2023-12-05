@@ -23,7 +23,6 @@ const getBooks = async (desc, minPrice, maxPrice, categoryIds) =>
             let booksArray = await res.json()
 
             document.getElementById("counter").innerText = booksArray.length;
-            console.log(booksArray.length)
             for (let i = 0; i < booksArray.length; i++) {
                 drawCard(booksArray[i])
 
@@ -43,7 +42,6 @@ const getBooks = async (desc, minPrice, maxPrice, categoryIds) =>
 }
 
 const drawCard = (book) => {
-    console.log(book);
     var tmpBook = document.getElementById("temp-card");
     var cln = tmpBook.content.cloneNode(true);
     cln.querySelector("img").src = "images/" + book.image;

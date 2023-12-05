@@ -1,10 +1,9 @@
 using Entities;
 using Microsoft.EntityFrameworkCore;
 using NLog.Web;
-using PresidentsApp.Middlewares;
 using Repositories;
 using Services;
-using WebApiSite;
+using WebApiSite.Middlerwars;
 
 var builder = WebApplication.CreateBuilder(args);
 // Add services to the container
@@ -26,8 +25,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 var app = builder.Build();
 //app.ErrorHandlingMiddleware();
-app.UseMiddleware<RequestLoggerMiddleware>();
-app.UseMiddleware<ErrorHandlingMiddleware>();
+app.UseRequestLoggerMiddleware();
+app.UseErrorHandlingMiddleware();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment()) 

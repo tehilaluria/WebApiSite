@@ -1,9 +1,11 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
+using Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Entities;
+namespace Repositories;
 
 public partial class BookStore325569796Context : DbContext
 {

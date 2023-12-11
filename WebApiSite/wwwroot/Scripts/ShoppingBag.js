@@ -10,7 +10,7 @@ const goToCart = () => {
       
     }
 
-    document.getElementById("totalAmount").innerText = sum;
+    document.getElementById("totalAmount").innerText = sum  ;
     document.getElementById("itemCount").innerText = newArrayCart.length;
 }
 
@@ -20,7 +20,7 @@ const drawCart = (book) =>
     var cln = tmpBook.content.cloneNode(true);
     cln.querySelector(".image").src = "images/" + book.image;;
     cln.querySelector(".descriptionColumn").innerText = book.bookName;
-    cln.querySelector(".price").innerText = book.price+"$";
+    cln.querySelector(".price").innerText = book.price+"¤";
     cln.querySelector("button").addEventListener("click", () => { deleteProduct(book) })
     document.getElementById("itemss").appendChild(cln);
     
@@ -43,7 +43,7 @@ const placeOrder = () =>
     if (!orderCart)
         return
      if (!sessionStorage.getItem("user"))
-        window.location.href = "homePage.html";
+         window.location.href = "HomeSite.html";
 
     let orderItemsArr = [];
 

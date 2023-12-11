@@ -17,7 +17,7 @@ builder.Services.AddTransient<IOrderRepository, OrderRepository>();
 builder.Services.AddTransient<IOrderServices, OrderServices>();
 builder.Services.AddTransient<IRateRepository, RateRepository>();
 builder.Services.AddTransient<IRateServices, RateServices>();
-builder.Services.AddDbContext<BookStore325569796Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MyBookStore")));
+builder.Services.AddDbContext<BookStore325569796Context>(option => option.UseSqlServer(builder.Configuration.GetConnectionString("MyBookStoreHome")));
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Host.UseNLog();
 builder.Services.AddControllers();

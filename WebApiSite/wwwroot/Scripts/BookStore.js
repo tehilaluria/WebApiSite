@@ -46,7 +46,7 @@ const drawCard = (book) => {
     var cln = tmpBook.content.cloneNode(true);
     cln.querySelector("img").src = "images/" + book.image;
     cln.querySelector("h1").innerText = book.bookName;
-    cln.querySelector("p.price").innerText = book.price + '$';
+    cln.querySelector("p.price").innerText = book.price + '¤';
     cln.querySelector("p.auther").innerText = book.auther;
     cln.querySelector("button").addEventListener('click', () => { insertToCart(book) })
     document.getElementById("BookList").appendChild(cln);
